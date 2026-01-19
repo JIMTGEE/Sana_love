@@ -19,23 +19,28 @@
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background-color: #fef5f7;
+            background: #fef5f7;
             color: #333;
             line-height: 1.6;
-            overflow-x: hidden;
             min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px 10px;
+            opacity: 0;
+            transition: opacity 1.8s ease;
+        }
+        
+        body.loaded {
+            opacity: 1;
         }
         
         #main {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
         }
         
         #error {
@@ -43,10 +48,10 @@
             background: #ffe6e6;
             border: 1px solid #ff9999;
             padding: 15px;
-            margin-bottom: 20px;
+            margin: 15px auto;
             border-radius: 8px;
             text-align: center;
-            width: 100%;
+            max-width: 90%;
         }
         
         #error a {
@@ -57,7 +62,6 @@
         
         #wrap {
             width: 100%;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -65,24 +69,24 @@
         
         #text {
             width: 100%;
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 820px;
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 20px auto;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
             position: relative;
             z-index: 2;
         }
         
         .paragraph {
-            margin-bottom: 25px;
-            line-height: 1.8;
-            font-size: 1.1rem;
+            margin-bottom: 24px;
+            line-height: 1.82;
+            font-size: 1.08rem;
             text-align: justify;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
+            transform: translateY(18px);
+            transition: all 0.9s ease;
         }
         
         .paragraph.visible {
@@ -91,14 +95,14 @@
         }
         
         .signature {
-            margin-top: 40px;
+            margin-top: 38px;
             text-align: right;
             font-style: italic;
-            font-size: 1.3rem;
+            font-size: 1.32rem;
             color: #b71c1c;
             font-weight: bold;
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transition: opacity 1.6s ease;
         }
         
         .signature.visible {
@@ -107,51 +111,52 @@
         
         #poetic-line {
             text-align: center;
-            margin: 25px 0;
+            margin: 28px 0;
             color: #ff6b6b;
             font-style: italic;
-            font-size: 1.2rem;
-            max-width: 800px;
+            font-size: 1.18rem;
+            max-width: 820px;
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 1.2s ease;
         }
         
         #poetic-line.visible {
             opacity: 1;
         }
         
-        #canvas {
+        canvas {
             width: 100%;
             max-width: 1100px;
             height: auto;
             aspect-ratio: 1100 / 680;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.09);
             background: #ffebee;
+            display: block;
+            margin: 0 auto;
             z-index: 1;
         }
         
         @media (max-width: 768px) {
-            #text { padding: 20px; margin-bottom: 20px; }
-            .paragraph { font-size: 1rem; margin-bottom: 20px; }
-            .signature { font-size: 1.1rem; margin-top: 30px; }
-            #poetic-line { font-size: 1rem; }
-            body { padding: 15px; }
+            #text { padding: 22px 18px; margin: 15px auto; }
+            .paragraph { font-size: 1.02rem; margin-bottom: 20px; }
+            .signature { font-size: 1.18rem; margin-top: 32px; }
+            #poetic-line { font-size: 1.05rem; }
         }
         
         @media (max-width: 480px) {
-            #text { padding: 15px; }
-            .paragraph { font-size: 0.95rem; margin-bottom: 15px; }
-            .signature { font-size: 1rem; margin-top: 25px; }
-            #poetic-line { font-size: 0.95rem; }
-            body { padding: 10px; }
+            body { padding: 10px 8px; }
+            #text { padding: 18px 15px; }
+            .paragraph { font-size: 0.97rem; }
+            .signature { font-size: 1.05rem; }
+            #poetic-line { font-size: 0.97rem; }
         }
         
         .hand { cursor: pointer; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
     </style>
     
-    <!-- Scripts - all in root folder -->
+    <!-- Scripts in root folder -->
     <script defer src="jquery.min.js"></script>
     <script defer src="jscex.min.js"></script>
     <script defer src="jscex-parser.js"></script>
@@ -212,70 +217,62 @@
                 Un cœur qui aime est un cœur qui espère...
             </div>
             
-            <div style="width:100%; display:flex; justify-content:center;">
-                <canvas id="canvas" width="1100" height="680"></canvas>
-            </div>
+            <canvas id="canvas" width="1100" height="680"></canvas>
         </div>
     </div>
 
-    <audio preload="auto" autoplay id="media" src="love.mp3" loop></audio>
+    <audio preload="auto" id="media" src="love.mp3" loop></audio>
 
     <script>
+        // Gentle page fade-in
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+
+        // Audio plays after first interaction (better compatibility)
+        const audio = document.getElementById('media');
+        document.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().catch(() => {});
+            }
+        }, { once: true });
+
         (function () {
             function initResponsive() {
                 const canvas = $('#canvas');
-                const container = $('#canvas-container') || canvas.parent();
-                
-                if (!canvas[0].getContext) {
+                if (!canvas[0] || !canvas[0].getContext) {
                     $("#error").show();
                     return false;
                 }
 
-                const containerWidth = container.width() || window.innerWidth;
-                const maxCanvasWidth = 1100;
-                const originalHeight = 680;
-                
-                let canvasWidth = Math.min(containerWidth - 40, maxCanvasWidth);
-                const aspectRatio = maxCanvasWidth / originalHeight;
-                let canvasHeight = canvasWidth / aspectRatio;
+                const parent = canvas.parent();
+                let canvasWidth = Math.min(parent.width() || window.innerWidth - 40, 1100);
+                const aspect = 1100 / 680;
+                let canvasHeight = canvasWidth / aspect;
 
                 canvas.attr({ width: canvasWidth, height: canvasHeight });
                 canvas.css({ width: canvasWidth + 'px', height: canvasHeight + 'px' });
 
                 const opts = {
-                    seed: {
-                        x: canvasWidth / 2 - 20,
-                        color: "rgb(190, 26, 37)",
-                        scale: 2
-                    },
+                    seed: { x: canvasWidth / 2 - 20, color: "rgb(190, 26, 37)", scale: 2 },
                     branch: [
                         [canvasWidth * 0.486, canvasHeight, canvasWidth * 0.518, 250, 500, 200, 30, 100, [
-                            [canvasWidth * 0.491, 500, 455, 417, 340, 400, 13, 100, [
-                                [450, 435, 434, 430, 394, 395, 2, 40]
-                            ]],
-                            [550, 445, 600, 356, 680, 345, 12, 100, [
-                                [578, 400, 648, 409, 661, 426, 3, 80]
-                            ]],
+                            [canvasWidth * 0.491, 500, 455, 417, 340, 400, 13, 100, [[450, 435, 434, 430, 394, 395, 2, 40]]],
+                            [550, 445, 600, 356, 680, 345, 12, 100, [[578, 400, 648, 409, 661, 426, 3, 80]]],
                             [539, 281, 537, 248, 534, 217, 3, 40],
                             [546, 397, 413, 247, 328, 244, 9, 80, [
                                 [427, 286, 383, 253, 371, 205, 2, 40],
                                 [498, 345, 435, 315, 395, 330, 4, 60]
                             ]],
-                            [546, 357, 608, 252, 678, 221, 6, 100, [
-                                [590, 293, 646, 277, 648, 271, 2, 80]
-                            ]]
+                            [546, 357, 608, 252, 678, 221, 6, 100, [[590, 293, 646, 277, 648, 271, 2, 80]]]
                         ]]
                     ],
                     bloom: {
                         num: Math.min(700, canvasWidth * 0.65),
                         width: canvasWidth,
-                        height: canvasHeight * 0.96,
+                        height: canvasHeight * 0.96
                     },
-                    footer: {
-                        width: canvasWidth,
-                        height: 5,
-                        speed: 10,
-                    }
+                    footer: { width: canvasWidth, height: 5, speed: 10 }
                 };
 
                 const tree = new Tree(canvas[0], canvasWidth, canvasHeight, opts);
@@ -285,110 +282,89 @@
 
                 canvas.off('click mousemove');
 
-                canvas.click(function (e) {
+                canvas.click(e => {
                     const offset = canvas.offset();
                     const x = e.pageX - offset.left;
                     const y = e.pageY - offset.top;
                     if (seed.hover(x, y)) {
                         hold = 0;
-                        canvas.off("click mousemove");
+                        canvas.off('click mousemove');
                         canvas.removeClass('hand');
                     }
-                }).mousemove(function (e) {
+                }).mousemove(e => {
                     const offset = canvas.offset();
                     const x = e.pageX - offset.left;
                     const y = e.pageY - offset.top;
                     canvas.toggleClass('hand', seed.hover(x, y));
                 });
 
-                const seedAnimate = eval(Jscex.compile("async", function () {
+                const seedAnimate = eval(Jscex.compile("async", function* () {
                     seed.draw();
-                    while (hold) { $await(Jscex.Async.sleep(10)); }
-                    while (seed.canScale()) {
-                        seed.scale(0.95);
-                        $await(Jscex.Async.sleep(10));
-                    }
-                    while (seed.canMove()) {
-                        seed.move(0, 2);
-                        foot.draw();
-                        $await(Jscex.Async.sleep(10));
-                    }
+                    while (hold) yield $await(Jscex.Async.sleep(10));
+                    while (seed.canScale()) { seed.scale(0.95); yield $await(Jscex.Async.sleep(10)); }
+                    while (seed.canMove()) { seed.move(0, 2); foot.draw(); yield $await(Jscex.Async.sleep(10)); }
                 }));
 
-                const growAnimate = eval(Jscex.compile("async", function () {
-                    do {
-                        tree.grow();
-                        $await(Jscex.Async.sleep(10));
-                    } while (tree.canGrow());
+                const growAnimate = eval(Jscex.compile("async", function* () {
+                    do { tree.grow(); yield $await(Jscex.Async.sleep(10)); } while (tree.canGrow());
                 }));
 
-                const flowAnimate = eval(Jscex.compile("async", function () {
-                    do {
-                        tree.flower(2);
-                        $await(Jscex.Async.sleep(10));
-                    } while (tree.canFlower());
+                const flowAnimate = eval(Jscex.compile("async", function* () {
+                    do { tree.flower(2); yield $await(Jscex.Async.sleep(10)); } while (tree.canFlower());
                 }));
 
-                const moveAnimate = eval(Jscex.compile("async", function () {
+                const moveAnimate = eval(Jscex.compile("async", function* () {
                     tree.snapshot("p1", 240, 0, 610, canvasHeight);
-                    while (tree.move("p1", 500, 0)) {
-                        foot.draw();
-                        $await(Jscex.Async.sleep(10));
-                    }
+                    while (tree.move("p1", 500, 0)) { foot.draw(); yield $await(Jscex.Async.sleep(10)); }
                     foot.draw();
                     tree.snapshot("p2", 500, 0, 610, canvasHeight);
-                    canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
+                    parent.css("background", "url(" + tree.toDataURL('image/png') + ")");
                     canvas.css("background", "#ffc0cb");
-                    $await(Jscex.Async.sleep(300));
+                    yield $await(Jscex.Async.sleep(300));
                     canvas.css("background", "none");
                 }));
 
-                const jumpAnimate = eval(Jscex.compile("async", function () {
+                const jumpAnimate = eval(Jscex.compile("async", function* () {
                     while (true) {
                         tree.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                         tree.jump();
                         foot.draw();
-                        $await(Jscex.Async.sleep(25));
+                        yield $await(Jscex.Async.sleep(25));
                     }
                 }));
 
-                const textAnimate = eval(Jscex.compile("async", function () {
+                const textAnimate = eval(Jscex.compile("async", function* () {
                     $("#text").removeClass("hidden");
-                    const paragraphs = $(".paragraph");
-                    const signature = $(".signature");
-                    const poetic = $("#poetic-line");
-                    
-                    for (let i = 0; i < paragraphs.length; i++) {
-                        $(paragraphs[i]).addClass("visible");
-                        $await(Jscex.Async.sleep(800));
+                    const ps = $(".paragraph");
+                    for (let i = 0; i < ps.length; i++) {
+                        $(ps[i]).addClass("visible");
+                        yield $await(Jscex.Async.sleep(800));
                     }
-                    
-                    signature.addClass("visible");
-                    $await(Jscex.Async.sleep(500));
-                    poetic.addClass("visible");
+                    $(".signature").addClass("visible");
+                    yield $await(Jscex.Async.sleep(500));
+                    $("#poetic-line").addClass("visible");
                 }));
 
-                const runAsync = eval(Jscex.compile("async", function () {
-                    $await(seedAnimate());
-                    $await(growAnimate());
-                    $await(flowAnimate());
-                    $await(moveAnimate());
+                const run = eval(Jscex.compile("async", function* () {
+                    yield $await(seedAnimate());
+                    yield $await(growAnimate());
+                    yield $await(flowAnimate());
+                    yield $await(moveAnimate());
                     textAnimate().start();
-                    $await(jumpAnimate());
+                    yield $await(jumpAnimate());
                 }));
 
-                runAsync().start();
-                
+                run().start();
+
                 return tree;
             }
 
-            $(document).ready(function() {
+            $(document).ready(() => {
                 initResponsive();
-
                 let resizeTimer;
-                $(window).resize(function() {
+                $(window).resize(() => {
                     clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(initResponsive, 250);
+                    resizeTimer = setTimeout(initResponsive, 280);
                 });
             });
         })();
