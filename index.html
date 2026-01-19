@@ -39,18 +39,6 @@
             overflow-x: hidden;
         }
         
-        /* Background overlay for better text readability */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9) 0%, rgba(255,240,243,0.7) 100%);
-            z-index: -1;
-        }
-        
         /* Main container */
         #main {
             width: 100%;
@@ -113,20 +101,6 @@
             backdrop-filter: blur(10px);
         }
         
-        /* Heart icon in text container */
-        #text::before {
-            content: '❤️';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-            background: white;
-            padding: 5px 10px;
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        
         /* Paragraph styling */
         .paragraph {
             margin-bottom: clamp(15px, 4vw, 25px);
@@ -144,13 +118,6 @@
             transform: translateY(0);
         }
         
-        /* Highlight important lines */
-        .paragraph:nth-child(2),
-        .paragraph:nth-child(6) {
-            color: #b71c1c;
-            font-weight: 500;
-        }
-        
         /* Signature styling */
         .signature {
             margin-top: clamp(25px, 6vw, 40px);
@@ -166,10 +133,6 @@
         
         .signature.visible {
             opacity: 1;
-        }
-        
-        .signature::before {
-            content: "— ";
         }
         
         /* Poetic line styling */
@@ -209,30 +172,16 @@
             position: relative;
         }
         
-        #canvas-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 15px;
-            pointer-events: none;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
-        }
-        
         /* Canvas styling */
         #canvas {
             width: 100% !important;
             height: auto !important;
-            aspect-ratio: 1100 / 680;
             display: block;
-            max-height: 70vh;
         }
         
         /* Loading indicator */
         .loading {
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             min-height: 200px;
@@ -240,20 +189,6 @@
             color: #b71c1c;
             flex-direction: column;
             gap: 15px;
-        }
-        
-        .loading::after {
-            content: '';
-            width: 40px;
-            height: 40px;
-            border: 3px solid #ff6b6b;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: loading 1s linear infinite;
-        }
-        
-        @keyframes loading {
-            to { transform: rotate(360deg); }
         }
         
         /* Hidden class */
@@ -281,11 +216,6 @@
                 border-radius: 18px;
             }
             
-            #text::before {
-                font-size: 20px;
-                top: -12px;
-            }
-            
             #poetic-line {
                 padding: 12px;
                 border-width: 3px;
@@ -309,11 +239,6 @@
                 border-radius: 15px;
             }
             
-            #text::before {
-                font-size: 18px;
-                top: -10px;
-            }
-            
             .paragraph {
                 font-size: 1rem;
                 line-height: 1.6;
@@ -333,27 +258,6 @@
             
             #canvas-container {
                 border-radius: 12px;
-            }
-            
-            /* Touch-friendly tap targets */
-            .hand::after {
-                content: '';
-                position: absolute;
-                top: -10px;
-                left: -10px;
-                right: -10px;
-                bottom: -10px;
-            }
-        }
-        
-        /* Very small screens */
-        @media (max-width: 320px) {
-            .paragraph {
-                font-size: 0.95rem;
-            }
-            
-            #text {
-                padding: 15px 12px;
             }
         }
         
@@ -388,105 +292,17 @@
                 margin-top: 15px;
             }
         }
-        
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-                color: #e0e0e0;
-            }
-            
-            body::before {
-                background: radial-gradient(circle at 50% 50%, rgba(26,26,46,0.9) 0%, rgba(22,33,62,0.7) 100%);
-            }
-            
-            #text {
-                background-color: rgba(40, 44, 52, 0.95);
-                border-color: rgba(255, 105, 180, 0.2);
-                color: #e0e0e0;
-            }
-            
-            #text::before {
-                background: #282c34;
-            }
-            
-            #poetic-line {
-                background: rgba(40, 44, 52, 0.9);
-                color: #ff6b6b;
-            }
-            
-            .paragraph:nth-child(2),
-            .paragraph:nth-child(6) {
-                color: #ff9999;
-            }
-            
-            .signature {
-                color: #ff9999;
-            }
-            
-            #canvas-container {
-                background: linear-gradient(45deg, #2d3746 0%, #364152 100%);
-            }
-        }
-        
-        /* Animation keyframes */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        /* Floating hearts in background */
-        .floating-hearts {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .floating-hearts span {
-            position: absolute;
-            font-size: 20px;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Responsive typography */
-        @media (min-width: 1400px) {
-            .paragraph {
-                font-size: 1.2rem;
-            }
-            
-            .signature {
-                font-size: 1.5rem;
-            }
-            
-            #poetic-line {
-                font-size: 1.4rem;
-            }
-        }
     </style>
+    
+    <!-- Required scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Fallback to local jQuery if CDN fails
+        window.jQuery || document.write('<script src="jquery.min.js"><\/script>');
+    </script>
 </head>
 
 <body>
-    <!-- Floating hearts background -->
-    <div class="floating-hearts" id="floating-hearts"></div>
-    
     <div id="main">
         <div id="error">
             Cher(e) utilisateur(trice), votre navigateur ne supporte pas le contenu qui va s'afficher.<br>
@@ -529,7 +345,7 @@
                     </div>
                     
                     <div class="signature">
-                        Avec tout mon amour
+                        I love you, Masssiguini
                     </div>
                 </div>
             </div>
@@ -551,51 +367,277 @@
         Votre navigateur ne supporte pas l'élément audio.
     </audio>
 
-    <!-- JavaScript Libraries - Fixed paths for GitHub Pages -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Fallback to local if CDN fails -->
+    <!-- Inline JavaScript for the tree animation -->
     <script>
-        window.jQuery || document.write('<script src="jquery.min.js"><\/script>');
-    </script>
-
-    <!-- Main Script -->
-    <script>
-        (function () {
-            // Create floating hearts
-            function createFloatingHearts() {
-                const container = document.getElementById('floating-hearts');
-                const hearts = ['❤️', '💖', '💗', '💓', '💞', '💕'];
-                
-                for (let i = 0; i < 15; i++) {
-                    const heart = document.createElement('span');
-                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.top = Math.random() * 100 + 'vh';
-                    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                    heart.style.animationDelay = Math.random() * 5 + 's';
-                    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                    container.appendChild(heart);
+        // First, define the necessary functions and classes
+        function Point(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        
+        function Branch(start, end, thickness, level, maxLevel) {
+            this.start = start;
+            this.end = end;
+            this.thickness = thickness;
+            this.level = level;
+            this.maxLevel = maxLevel;
+            this.length = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+            this.growCount = 0;
+            
+            this.grow = function() {
+                if (this.growCount < this.length) {
+                    this.growCount++;
+                    return true;
                 }
+                return false;
+            };
+            
+            this.draw = function(ctx) {
+                if (this.growCount < 1) return;
+                
+                ctx.beginPath();
+                ctx.moveTo(this.start.x, this.start.y);
+                var growX = this.start.x + (this.end.x - this.start.x) * (this.growCount / this.length);
+                var growY = this.start.y + (this.end.y - this.start.y) * (this.growCount / this.length);
+                ctx.lineTo(growX, growY);
+                ctx.lineWidth = this.thickness;
+                ctx.strokeStyle = "#8B4513";
+                ctx.stroke();
+            };
+        }
+        
+        function Flower(x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+            this.petalCount = 5;
+            this.flowered = false;
+            
+            this.flower = function(ctx) {
+                if (!this.flowered) {
+                    this.flowered = true;
+                    return true;
+                }
+                return false;
+            };
+            
+            this.draw = function(ctx) {
+                if (!this.flowered) return;
+                
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                
+                // Draw petals
+                for (var i = 0; i < this.petalCount; i++) {
+                    ctx.beginPath();
+                    ctx.rotate(Math.PI * 2 / this.petalCount);
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(this.radius/2, -this.radius/2, this.radius, 0, 0, this.radius);
+                    ctx.closePath();
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+                
+                // Draw center
+                ctx.beginPath();
+                ctx.arc(0, 0, this.radius/4, 0, Math.PI * 2);
+                ctx.fillStyle = "#FFD700";
+                ctx.fill();
+                
+                ctx.restore();
+            };
+        }
+        
+        function Seed(x, y, color, scale) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.scale = scale || 1;
+            this.radius = 10 * this.scale;
+            
+            this.hover = function(x, y) {
+                var distance = Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2));
+                return distance <= this.radius;
+            };
+            
+            this.draw = function(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.scale, this.scale);
+                
+                // Draw heart shape
+                ctx.beginPath();
+                ctx.moveTo(0, 5);
+                ctx.bezierCurveTo(-10, -10, -20, 5, 0, 20);
+                ctx.bezierCurveTo(20, 5, 10, -10, 0, 5);
+                ctx.closePath();
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                
+                ctx.restore();
+            };
+            
+            this.canScale = function() {
+                return this.scale > 0.2;
+            };
+            
+            this.scale = function(ratio) {
+                this.scale *= ratio;
+                this.radius = 10 * this.scale;
+            };
+            
+            this.canMove = function() {
+                return this.y < window.innerHeight - 100;
+            };
+            
+            this.move = function(x, y) {
+                this.x += x;
+                this.y += y;
+                return this.canMove();
+            };
+        }
+        
+        function Tree(canvas, width, height, opts) {
+            this.canvas = canvas;
+            this.ctx = canvas.getContext('2d');
+            this.width = width;
+            this.height = height;
+            this.opts = opts;
+            
+            this.seed = new Seed(opts.seed.x, opts.seed.y, opts.seed.color, opts.seed.scale);
+            this.branches = [];
+            this.flowers = [];
+            
+            // Initialize branches
+            for (var i = 0; i < opts.branch.length; i++) {
+                var branchOpt = opts.branch[i];
+                this.createBranch(branchOpt, 0);
             }
             
-            // Responsive initialization
-            function initResponsive() {
-                const canvas = document.getElementById('canvas');
-                const container = document.getElementById('canvas-container');
+            // Initialize flowers
+            for (var i = 0; i < opts.bloom.num; i++) {
+                var x = Math.random() * opts.bloom.width;
+                var y = Math.random() * opts.bloom.height;
+                var radius = Math.random() * 5 + 2;
+                var colors = ["#FF69B4", "#FF1493", "#FF6B9D", "#FF8FAB", "#FFB6C1"];
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                this.flowers.push(new Flower(x, y, radius, color));
+            }
+            
+            this.createBranch = function(branchOpt, level) {
+                var start = new Point(branchOpt[0], branchOpt[1]);
+                var end = new Point(branchOpt[2], branchOpt[3]);
+                var thickness = branchOpt[6];
+                var maxLevel = branchOpt[7];
+                
+                var branch = new Branch(start, end, thickness, level, maxLevel);
+                this.branches.push(branch);
+                
+                // Create sub-branches
+                if (branchOpt[8]) {
+                    for (var i = 0; i < branchOpt[8].length; i++) {
+                        this.createBranch(branchOpt[8][i], level + 1);
+                    }
+                }
+            };
+            
+            this.grow = function() {
+                var canGrow = false;
+                for (var i = 0; i < this.branches.length; i++) {
+                    if (this.branches[i].grow()) {
+                        canGrow = true;
+                    }
+                }
+                return canGrow;
+            };
+            
+            this.canGrow = function() {
+                for (var i = 0; i < this.branches.length; i++) {
+                    if (this.branches[i].growCount < this.branches[i].length) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            
+            this.flower = function(num) {
+                var flowered = false;
+                for (var i = 0; i < Math.min(num, this.flowers.length); i++) {
+                    if (this.flowers[i].flower(this.ctx)) {
+                        flowered = true;
+                    }
+                }
+                return flowered;
+            };
+            
+            this.canFlower = function() {
+                for (var i = 0; i < this.flowers.length; i++) {
+                    if (!this.flowers[i].flowered) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            
+            this.draw = function() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                // Draw branches
+                for (var i = 0; i < this.branches.length; i++) {
+                    this.branches[i].draw(this.ctx);
+                }
+                
+                // Draw flowers
+                for (var i = 0; i < this.flowers.length; i++) {
+                    this.flowers[i].draw(this.ctx);
+                }
+                
+                // Draw seed
+                this.seed.draw(this.ctx);
+            };
+            
+            this.snapshot = function(name, x, y, width, height) {
+                // Simplified snapshot - just remember dimensions
+            };
+            
+            this.move = function(name, x, y) {
+                // Simplified move - just return false for now
+                return false;
+            };
+            
+            this.jump = function() {
+                // Simple jumping animation for flowers
+                for (var i = 0; i < this.flowers.length; i++) {
+                    this.flowers[i].y += Math.sin(Date.now() / 1000 + i) * 0.5;
+                }
+                this.draw();
+            };
+            
+            this.toDataURL = function(type) {
+                return this.canvas.toDataURL(type);
+            };
+        }
+        
+        // Main initialization function
+        (function() {
+            // Initialize responsive canvas
+            function initCanvas() {
+                var canvas = $('#canvas')[0];
+                var container = $('#canvas-container')[0];
                 
                 if (!canvas.getContext) {
-                    document.getElementById("error").style.display = 'block';
+                    $("#error").show();
                     return false;
                 }
-
-                // Get available space
-                const maxWidth = Math.min(1100, window.innerWidth - 40);
-                const maxHeight = Math.min(680, window.innerHeight * 0.7);
                 
-                // Calculate responsive dimensions
-                const aspectRatio = 1100 / 680;
-                let width = maxWidth;
-                let height = width / aspectRatio;
+                // Get responsive dimensions
+                var maxWidth = Math.min(1100, window.innerWidth - 40);
+                var maxHeight = Math.min(680, window.innerHeight * 0.7);
+                var aspectRatio = 1100 / 680;
+                
+                var width = maxWidth;
+                var height = width / aspectRatio;
                 
                 if (height > maxHeight) {
                     height = maxHeight;
@@ -605,139 +647,225 @@
                 // Set canvas dimensions
                 canvas.width = width;
                 canvas.height = height;
-                canvas.style.width = width + 'px';
-                canvas.style.height = height + 'px';
                 
-                // Update container size
-                container.style.maxWidth = width + 'px';
-                container.style.maxHeight = height + 'px';
-
-                return {
-                    width: width,
-                    height: height,
-                    canvas: canvas
-                };
-            }
-            
-            // Simple animation fallback for mobile
-            function simpleAnimation() {
-                const paragraphs = document.querySelectorAll('.paragraph');
-                const signature = document.querySelector('.signature');
-                const poeticLine = document.getElementById('poetic-line');
-                const textContainer = document.getElementById('text');
-                
-                // Show text container
-                textContainer.classList.remove('hidden');
-                
-                // Animate paragraphs
-                paragraphs.forEach((para, index) => {
-                    setTimeout(() => {
-                        para.classList.add('visible');
-                    }, index * 800);
-                });
-                
-                // Show signature
-                setTimeout(() => {
-                    signature.classList.remove('hidden');
-                    signature.classList.add('visible');
-                }, paragraphs.length * 800);
-                
-                // Show poetic line
-                setTimeout(() => {
-                    poeticLine.classList.remove('hidden');
-                    poeticLine.classList.add('visible');
-                }, paragraphs.length * 800 + 500);
-                
-                // Start music if available
-                const audio = document.getElementById('media');
-                if (audio && typeof audio.play === 'function') {
-                    audio.play().catch(e => console.log("Audio autoplay prevented:", e));
-                }
-            }
-            
-            // Main initialization
-            function init() {
-                // Create background hearts
-                createFloatingHearts();
-                
-                // Initialize responsive layout
-                const dimensions = initResponsive();
-                
-                // Try to load external scripts
-                loadExternalScripts().then(() => {
-                    // If scripts loaded successfully, run the original animation
-                    if (window.Tree && window.Jscex) {
-                        runTreeAnimation(dimensions);
-                    } else {
-                        // Fallback to simple animation
-                        simpleAnimation();
+                // Create tree with responsive options
+                var opts = {
+                    seed: {
+                        x: width / 2 - 20,
+                        y: height * 0.8,
+                        color: "rgb(190, 26, 37)",
+                        scale: Math.min(2, width / 550)
+                    },
+                    branch: [
+                        [width * 0.486, height, width * 0.518, height * 0.37, 500 * (width/1100), 200 * (height/680), 
+                         30 * (width/1100), 100, [
+                            [width * 0.491, height * 0.735, width * 0.414, height * 0.613, 
+                             width * 0.358, height * 0.581, 2 * (width/1100), 40],
+                            [width * 0.5, height * 0.654, width * 0.545, height * 0.524, 
+                             width * 0.618, height * 0.507, 12 * (width/1100), 100, [
+                                [width * 0.525, height * 0.588, width * 0.589, height * 0.601, 
+                                 width * 0.601, height * 0.626, 3 * (width/1100), 80]
+                            ]],
+                            [width * 0.49, height * 0.413, width * 0.488, height * 0.365, 
+                             width * 0.485, height * 0.319, 3 * (width/1100), 40],
+                            [width * 0.496, height * 0.584, width * 0.376, height * 0.363, 
+                             width * 0.298, height * 0.359, 9 * (width/1100), 80, [
+                                [width * 0.388, height * 0.421, width * 0.348, height * 0.372, 
+                                 width * 0.337, height * 0.301, 2 * (width/1100), 40],
+                                [width * 0.453, height * 0.507, width * 0.395, height * 0.463, 
+                                 width * 0.359, height * 0.485, 4 * (width/1100), 60]
+                            ]],
+                            [width * 0.496, height * 0.525, width * 0.553, height * 0.371, 
+                             width * 0.616, height * 0.325, 6 * (width/1100), 100, [
+                                [width * 0.536, height * 0.431, width * 0.587, height * 0.407, 
+                                 width * 0.589, height * 0.398, 2 * (width/1100), 80]
+                            ]]
+                        ]]
+                    ],
+                    bloom: {
+                        num: Math.min(700, width * 0.65),
+                        width: width,
+                        height: height * 0.96
                     }
-                }).catch(() => {
-                    // Fallback to simple animation
-                    simpleAnimation();
+                };
+                
+                return new Tree(canvas, width, height, opts);
+            }
+            
+            // Animation sequence
+            function startAnimation(tree) {
+                var canvas = $('#canvas');
+                var seed = tree.seed;
+                var hold = 1;
+                
+                // Event listeners
+                canvas.off('click').off('mousemove').off('touchstart');
+                
+                canvas.click(function(e) {
+                    var offset = canvas.offset();
+                    var x = e.pageX - offset.left;
+                    var y = e.pageY - offset.top;
+                    if (seed.hover(x, y)) {
+                        hold = 0;
+                        canvas.unbind("click");
+                        canvas.unbind("mousemove");
+                        canvas.removeClass('hand');
+                    }
+                }).mousemove(function(e) {
+                    var offset = canvas.offset();
+                    var x = e.pageX - offset.left;
+                    var y = e.pageY - offset.top;
+                    canvas.toggleClass('hand', seed.hover(x, y));
                 });
+                
+                // Touch support for mobile
+                canvas.on('touchstart', function(e) {
+                    e.preventDefault();
+                    var offset = canvas.offset();
+                    var touch = e.originalEvent.touches[0];
+                    var x = touch.pageX - offset.left;
+                    var y = touch.pageY - offset.top;
+                    if (seed.hover(x, y)) {
+                        hold = 0;
+                        canvas.unbind("click");
+                        canvas.unbind("mousemove");
+                        canvas.unbind("touchstart");
+                        canvas.removeClass('hand');
+                    }
+                });
+                
+                // Animation steps
+                function animateSeed() {
+                    return new Promise(function(resolve) {
+                        seed.draw(tree.ctx);
+                        
+                        function step() {
+                            if (hold) {
+                                requestAnimationFrame(step);
+                                return;
+                            }
+                            
+                            if (seed.canScale()) {
+                                seed.scale(0.95);
+                                tree.draw();
+                                setTimeout(step, 10);
+                            } else if (seed.canMove()) {
+                                seed.move(0, 2);
+                                tree.draw();
+                                setTimeout(step, 10);
+                            } else {
+                                resolve();
+                            }
+                        }
+                        
+                        step();
+                    });
+                }
+                
+                function animateGrow() {
+                    return new Promise(function(resolve) {
+                        function step() {
+                            if (tree.grow()) {
+                                tree.draw();
+                                setTimeout(step, 10);
+                            } else {
+                                resolve();
+                            }
+                        }
+                        step();
+                    });
+                }
+                
+                function animateFlowers() {
+                    return new Promise(function(resolve) {
+                        function step() {
+                            if (tree.flower(2)) {
+                                tree.draw();
+                                setTimeout(step, 10);
+                            } else {
+                                resolve();
+                            }
+                        }
+                        step();
+                    });
+                }
+                
+                function animateText() {
+                    return new Promise(function(resolve) {
+                        $("#text").removeClass("hidden");
+                        
+                        var paragraphs = $(".paragraph");
+                        var signature = $(".signature");
+                        var poeticLine = $("#poetic-line");
+                        
+                        function showParagraphs(index) {
+                            if (index < paragraphs.length) {
+                                $(paragraphs[index]).addClass("visible");
+                                setTimeout(function() {
+                                    showParagraphs(index + 1);
+                                }, 800);
+                            } else {
+                                signature.removeClass("hidden").addClass("visible");
+                                setTimeout(function() {
+                                    poeticLine.removeClass("hidden").addClass("visible");
+                                    resolve();
+                                }, 500);
+                            }
+                        }
+                        
+                        showParagraphs(0);
+                    });
+                }
+                
+                function animateJump() {
+                    function jump() {
+                        tree.jump();
+                        requestAnimationFrame(jump);
+                    }
+                    jump();
+                }
+                
+                // Start music
+                var audio = document.getElementById('media');
+                if (audio) {
+                    audio.play().catch(function(e) {
+                        console.log("Audio playback failed:", e);
+                    });
+                }
+                
+                // Run animations in sequence
+                animateSeed()
+                    .then(animateGrow)
+                    .then(animateFlowers)
+                    .then(animateText)
+                    .then(animateJump);
+            }
+            
+            // Initialize on document ready
+            $(document).ready(function() {
+                // Initial setup
+                var tree = initCanvas();
+                if (tree) {
+                    tree.draw(); // Initial draw
+                    setTimeout(function() {
+                        startAnimation(tree);
+                    }, 1000); // Wait 1 second before starting animation
+                }
                 
                 // Handle window resize
-                let resizeTimeout;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(initResponsive, 250);
+                var resizeTimer;
+                $(window).resize(function() {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(function() {
+                        if (tree) {
+                            tree = initCanvas();
+                            if (tree) {
+                                tree.draw();
+                            }
+                        }
+                    }, 250);
                 });
-            }
-            
-            // Load external scripts
-            function loadExternalScripts() {
-                return new Promise((resolve, reject) => {
-                    // Try to load from local files first
-                    const scripts = [
-                        'love.js',
-                        'functions.js'
-                    ];
-                    
-                    let loaded = 0;
-                    
-                    scripts.forEach(src => {
-                        const script = document.createElement('script');
-                        script.src = src;
-                        script.onload = () => {
-                            loaded++;
-                            if (loaded === scripts.length) resolve();
-                        };
-                        script.onerror = () => {
-                            loaded++;
-                            if (loaded === scripts.length) reject();
-                        };
-                        document.head.appendChild(script);
-                    });
-                    
-                    // If no scripts are found, reject immediately
-                    if (scripts.length === 0) reject();
-                });
-            }
-            
-            // Run the tree animation (simplified version)
-            function runTreeAnimation(dimensions) {
-                try {
-                    // Your existing tree animation code would go here
-                    // For now, we'll use the simple animation
-                    simpleAnimation();
-                } catch (error) {
-                    console.error("Animation error:", error);
-                    simpleAnimation();
-                }
-            }
-            
-            // Start everything when DOM is loaded
-            document.addEventListener('DOMContentLoaded', init);
-            
-            // Ensure audio can play on mobile
-            document.addEventListener('touchstart', function() {
-                const audio = document.getElementById('media');
-                if (audio && audio.paused) {
-                    audio.play().catch(e => console.log("Audio play failed:", e));
-                }
-            }, { once: true });
-            
+            });
         })();
     </script>
 
