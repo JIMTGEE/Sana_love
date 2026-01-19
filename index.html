@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Une lettre d'amour sincère</title>
     <link rel="icon" type="image/x-icon" href="https://i.loli.net/2021/06/03/lFg2V4WUcmkB98G.png">
+    
     <meta name="language" content="fr">
     <meta name="title" content="Une lettre du cœur">
-    <meta name="github" content="https://github.com/sun0225SUN/Awesome-Love-Code">
-    <meta name="describe" content="Une lettre d'amour sincère, exprimant des sentiments profonds">
+    <meta name="description" content="Une lettre d'amour sincère, exprimant des sentiments profonds">
     
-    <!-- Responsive CSS -->
     <style>
-        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
@@ -33,21 +31,16 @@
             padding: 20px;
         }
         
-        /* Main container */
         #main {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         
-        /* Error message styling */
         #error {
             display: none;
-            background-color: #ffe6e6;
+            background: #ffe6e6;
             border: 1px solid #ff9999;
             padding: 15px;
             margin-bottom: 20px;
@@ -58,15 +51,10 @@
         
         #error a {
             color: #d32f2f;
-            text-decoration: none;
             font-weight: bold;
+            text-decoration: none;
         }
         
-        #error a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Wrapper for content */
         #wrap {
             width: 100%;
             position: relative;
@@ -75,20 +63,18 @@
             align-items: center;
         }
         
-        /* Text content container */
         #text {
             width: 100%;
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             position: relative;
             z-index: 2;
         }
         
-        /* Paragraph styling */
         .paragraph {
             margin-bottom: 25px;
             line-height: 1.8;
@@ -96,7 +82,7 @@
             text-align: justify;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.8s, transform 0.8s;
+            transition: all 0.8s ease;
         }
         
         .paragraph.visible {
@@ -104,7 +90,6 @@
             transform: translateY(0);
         }
         
-        /* Signature styling */
         .signature {
             margin-top: 40px;
             text-align: right;
@@ -113,150 +98,82 @@
             color: #b71c1c;
             font-weight: bold;
             opacity: 0;
-            transition: opacity 1.5s;
+            transition: opacity 1.5s ease;
         }
         
         .signature.visible {
             opacity: 1;
         }
         
-        /* Poetic line styling */
         #poetic-line {
             text-align: center;
             margin: 25px 0;
             color: #ff6b6b;
             font-style: italic;
             font-size: 1.2rem;
-            width: 100%;
             max-width: 800px;
             opacity: 0;
-            transition: opacity 1s;
+            transition: opacity 1s ease;
         }
         
         #poetic-line.visible {
             opacity: 1;
         }
         
-        /* Canvas styling */
         #canvas {
             width: 100%;
             max-width: 1100px;
             height: auto;
             aspect-ratio: 1100 / 680;
             border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            background-color: #ffebee;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            background: #ffebee;
             z-index: 1;
         }
         
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            #text {
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-            
-            .paragraph {
-                font-size: 1rem;
-                margin-bottom: 20px;
-            }
-            
-            .signature {
-                font-size: 1.1rem;
-                margin-top: 30px;
-            }
-            
-            #poetic-line {
-                font-size: 1rem;
-                margin: 20px 0;
-            }
-            
-            body {
-                padding: 15px;
-            }
+            #text { padding: 20px; margin-bottom: 20px; }
+            .paragraph { font-size: 1rem; margin-bottom: 20px; }
+            .signature { font-size: 1.1rem; margin-top: 30px; }
+            #poetic-line { font-size: 1rem; }
+            body { padding: 15px; }
         }
         
         @media (max-width: 480px) {
-            #text {
-                padding: 15px;
-            }
-            
-            .paragraph {
-                font-size: 0.95rem;
-                margin-bottom: 15px;
-            }
-            
-            .signature {
-                font-size: 1rem;
-                margin-top: 25px;
-            }
-            
-            #poetic-line {
-                font-size: 0.95rem;
-                margin: 15px 0;
-            }
-            
-            body {
-                padding: 10px;
-            }
+            #text { padding: 15px; }
+            .paragraph { font-size: 0.95rem; margin-bottom: 15px; }
+            .signature { font-size: 1rem; margin-top: 25px; }
+            #poetic-line { font-size: 0.95rem; }
+            body { padding: 10px; }
         }
         
-        /* Animation for text appearance */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Hand cursor for interactive elements */
-        .hand {
-            cursor: pointer;
-        }
-        
-        /* Loading state */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            font-size: 1.2rem;
-            color: #b71c1c;
-        }
-        
-        /* Hidden class */
-        .hidden {
-            display: none;
-        }
+        .hand { cursor: pointer; }
+        .hidden { display: none; }
     </style>
     
-    <!-- External scripts (keeping your original ones) -->
-    <script type="text/javascript" src="./Love_files/jquery.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-parser.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-jit.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-builderbase.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-async.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-async-powerpack.min.js"></script>
-    <script type="text/javascript" src="./Love_files/functions.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./Love_files/love.js" charset="utf-8"></script>
+    <!-- Scripts - all in root folder -->
+    <script defer src="jquery.min.js"></script>
+    <script defer src="jscex.min.js"></script>
+    <script defer src="jscex-parser.js"></script>
+    <script defer src="jscex-jit.js"></script>
+    <script defer src="jscex-builderbase.min.js"></script>
+    <script defer src="jscex-async.min.js"></script>
+    <script defer src="jscex-async-powerpack.min.js"></script>
+    <script defer src="functions.js" charset="utf-8"></script>
+    <script defer src="love.js" charset="utf-8"></script>
 </head>
 
 <body>
     <div id="main">
-        <div id="error">Cher(e) utilisateur(trice), votre navigateur ne supporte pas le contenu qui va s'afficher, veuillez utiliser Chrome (<a
-                href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>) ou Firefox (<a
-                href="http://firefox.com.cn/download/">Firefox</a>) ~</div>
+        <div id="error">
+            Cher(e) utilisateur(trice), votre navigateur ne supporte pas cette page.<br>
+            Veuillez utiliser Chrome ou Firefox pour une meilleure expérience.
+        </div>
+        
         <div id="wrap">
             <div id="text" class="hidden">
                 <div id="code">
-                    <div class="paragraph">
-                        Je t'aime, et ce n'est pas un sentiment léger.
-                    </div>
+                    <div class="paragraph">Je t'aime, et ce n'est pas un sentiment léger.</div>
                     
                     <div class="paragraph">
                         Je t'aime même quand ça fait mal, même quand certaines choses me blessent.<br>
@@ -287,62 +204,52 @@
                         Et malgré tout, je t'aime.
                     </div>
                     
-                    <div class="signature">
-                        Avec tout mon amour
-                    </div>
+                    <div class="signature">Avec tout mon amour 💕</div>
                 </div>
             </div>
+            
             <div id="poetic-line" class="hidden">
                 Un cœur qui aime est un cœur qui espère...
             </div>
             
-            <!-- Responsive canvas container -->
-            <div id="canvas-container" style="width: 100%; display: flex; justify-content: center;">
+            <div style="width:100%; display:flex; justify-content:center;">
                 <canvas id="canvas" width="1100" height="680"></canvas>
             </div>
         </div>
     </div>
 
-    <audio preload="auto" autoplay="" id="media" src="love.mp3" loop="loop"></audio>
+    <audio preload="auto" autoplay id="media" src="love.mp3" loop></audio>
 
     <script>
         (function () {
-            // Initialize responsive adjustments
             function initResponsive() {
-                var canvas = $('#canvas');
-                var container = $('#canvas-container');
+                const canvas = $('#canvas');
+                const container = $('#canvas-container') || canvas.parent();
                 
                 if (!canvas[0].getContext) {
                     $("#error").show();
                     return false;
                 }
 
-                // Get container width for responsive sizing
-                var containerWidth = container.width();
-                var maxCanvasWidth = 1100;
-                var canvasHeight = 680;
+                const containerWidth = container.width() || window.innerWidth;
+                const maxCanvasWidth = 1100;
+                const originalHeight = 680;
                 
-                // Calculate responsive dimensions
-                var canvasWidth = Math.min(containerWidth, maxCanvasWidth);
-                var aspectRatio = 1100 / 680;
-                var responsiveHeight = canvasWidth / aspectRatio;
-                
-                // Set responsive canvas dimensions
-                canvas.attr("width", canvasWidth);
-                canvas.attr("height", responsiveHeight);
-                canvas.css({
-                    'width': canvasWidth + 'px',
-                    'height': responsiveHeight + 'px'
-                });
+                let canvasWidth = Math.min(containerWidth - 40, maxCanvasWidth);
+                const aspectRatio = maxCanvasWidth / originalHeight;
+                let canvasHeight = canvasWidth / aspectRatio;
 
-                var opts = {
+                canvas.attr({ width: canvasWidth, height: canvasHeight });
+                canvas.css({ width: canvasWidth + 'px', height: canvasHeight + 'px' });
+
+                const opts = {
                     seed: {
                         x: canvasWidth / 2 - 20,
                         color: "rgb(190, 26, 37)",
                         scale: 2
                     },
                     branch: [
-                        [canvasWidth * 0.486, responsiveHeight, canvasWidth * 0.518, 250, 500, 200, 30, 100, [
+                        [canvasWidth * 0.486, canvasHeight, canvasWidth * 0.518, 250, 500, 200, 30, 100, [
                             [canvasWidth * 0.491, 500, 455, 417, 340, 400, 13, 100, [
                                 [450, 435, 434, 430, 394, 395, 2, 40]
                             ]],
@@ -360,47 +267,43 @@
                         ]]
                     ],
                     bloom: {
-                        num: Math.min(700, canvasWidth * 0.65), // Responsive number of blooms
+                        num: Math.min(700, canvasWidth * 0.65),
                         width: canvasWidth,
-                        height: responsiveHeight * 0.96,
+                        height: canvasHeight * 0.96,
                     },
                     footer: {
                         width: canvasWidth,
                         height: 5,
                         speed: 10,
                     }
-                }
+                };
 
-                var tree = new Tree(canvas[0], canvasWidth, responsiveHeight, opts);
-                var seed = tree.seed;
-                var foot = tree.footer;
-                var hold = 1;
+                const tree = new Tree(canvas[0], canvasWidth, canvasHeight, opts);
+                const seed = tree.seed;
+                const foot = tree.footer;
+                let hold = 1;
 
-                // Clear previous event listeners
-                canvas.off('click').off('mousemove');
-                
+                canvas.off('click mousemove');
+
                 canvas.click(function (e) {
-                    var offset = canvas.offset(), x, y;
-                    x = e.pageX - offset.left;
-                    y = e.pageY - offset.top;
+                    const offset = canvas.offset();
+                    const x = e.pageX - offset.left;
+                    const y = e.pageY - offset.top;
                     if (seed.hover(x, y)) {
                         hold = 0;
-                        canvas.unbind("click");
-                        canvas.unbind("mousemove");
+                        canvas.off("click mousemove");
                         canvas.removeClass('hand');
                     }
                 }).mousemove(function (e) {
-                    var offset = canvas.offset(), x, y;
-                    x = e.pageX - offset.left;
-                    y = e.pageY - offset.top;
+                    const offset = canvas.offset();
+                    const x = e.pageX - offset.left;
+                    const y = e.pageY - offset.top;
                     canvas.toggleClass('hand', seed.hover(x, y));
                 });
 
-                var seedAnimate = eval(Jscex.compile("async", function () {
+                const seedAnimate = eval(Jscex.compile("async", function () {
                     seed.draw();
-                    while (hold) {
-                        $await(Jscex.Async.sleep(10));
-                    }
+                    while (hold) { $await(Jscex.Async.sleep(10)); }
                     while (seed.canScale()) {
                         seed.scale(0.95);
                         $await(Jscex.Async.sleep(10));
@@ -412,76 +315,65 @@
                     }
                 }));
 
-                var growAnimate = eval(Jscex.compile("async", function () {
+                const growAnimate = eval(Jscex.compile("async", function () {
                     do {
                         tree.grow();
                         $await(Jscex.Async.sleep(10));
                     } while (tree.canGrow());
                 }));
 
-                var flowAnimate = eval(Jscex.compile("async", function () {
+                const flowAnimate = eval(Jscex.compile("async", function () {
                     do {
                         tree.flower(2);
                         $await(Jscex.Async.sleep(10));
                     } while (tree.canFlower());
                 }));
 
-                var moveAnimate = eval(Jscex.compile("async", function () {
-                    tree.snapshot("p1", 240, 0, 610, responsiveHeight);
+                const moveAnimate = eval(Jscex.compile("async", function () {
+                    tree.snapshot("p1", 240, 0, 610, canvasHeight);
                     while (tree.move("p1", 500, 0)) {
                         foot.draw();
                         $await(Jscex.Async.sleep(10));
                     }
                     foot.draw();
-                    tree.snapshot("p2", 500, 0, 610, responsiveHeight);
-
-                    // Contournement d'un scintillement indésirable (＞﹏＜)
+                    tree.snapshot("p2", 500, 0, 610, canvasHeight);
                     canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
                     canvas.css("background", "#ffc0cb");
                     $await(Jscex.Async.sleep(300));
                     canvas.css("background", "none");
                 }));
 
-                var jumpAnimate = eval(Jscex.compile("async", function () {
-                    var ctx = tree.ctx;
+                const jumpAnimate = eval(Jscex.compile("async", function () {
                     while (true) {
-                        tree.ctx.clearRect(0, 0, canvasWidth, responsiveHeight);
+                        tree.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
                         tree.jump();
                         foot.draw();
                         $await(Jscex.Async.sleep(25));
                     }
                 }));
 
-                var textAnimate = eval(Jscex.compile("async", function () {
-                    // Show text container
+                const textAnimate = eval(Jscex.compile("async", function () {
                     $("#text").removeClass("hidden");
+                    const paragraphs = $(".paragraph");
+                    const signature = $(".signature");
+                    const poetic = $("#poetic-line");
                     
-                    // Animate paragraphs one by one
-                    var paragraphs = $(".paragraph");
-                    var signature = $(".signature");
-                    var poeticLine = $("#poetic-line");
-                    
-                    for (var i = 0; i < paragraphs.length; i++) {
+                    for (let i = 0; i < paragraphs.length; i++) {
                         $(paragraphs[i]).addClass("visible");
                         $await(Jscex.Async.sleep(800));
                     }
                     
-                    // Show signature
-                    signature.removeClass("hidden").addClass("visible");
+                    signature.addClass("visible");
                     $await(Jscex.Async.sleep(500));
-                    
-                    // Show poetic line
-                    poeticLine.removeClass("hidden").addClass("visible");
+                    poetic.addClass("visible");
                 }));
 
-                var runAsync = eval(Jscex.compile("async", function () {
+                const runAsync = eval(Jscex.compile("async", function () {
                     $await(seedAnimate());
                     $await(growAnimate());
                     $await(flowAnimate());
                     $await(moveAnimate());
-
                     textAnimate().start();
-
                     $await(jumpAnimate());
                 }));
 
@@ -489,24 +381,17 @@
                 
                 return tree;
             }
-            
-            // Initialize on document ready
+
             $(document).ready(function() {
-                // Initial setup
-                var treeInstance = initResponsive();
-                
-                // Re-initialize on window resize (with debounce)
-                var resizeTimer;
+                initResponsive();
+
+                let resizeTimer;
                 $(window).resize(function() {
                     clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(function() {
-                        initResponsive();
-                    }, 250);
+                    resizeTimer = setTimeout(initResponsive, 250);
                 });
             });
-            
         })();
     </script>
-
 </body>
 </html>
