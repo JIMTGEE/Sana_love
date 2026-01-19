@@ -1,281 +1,302 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Une lettre d'amour sincère</title>
     <link rel="icon" type="image/x-icon" href="https://i.loli.net/2021/06/03/lFg2V4WUcmkB98G.png">
-    <meta name="language" content="fr">
-    <meta name="title" content="Une lettre du cœur">
-    <meta name="github" content="https://github.com/sun0225SUN/Awesome-Love-Code">
-    <meta name="describe" content="Une lettre d'amour sincère, exprimant des sentiments profonds">
-    <link type="text/css" rel="stylesheet" href="./Love_files/default.css">
-    <script type="text/javascript" src="./Love_files/jquery.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-parser.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-jit.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-builderbase.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-async.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-async-powerpack.min.js"></script>
-    <script type="text/javascript" src="./Love_files/functions.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./Love_files/love.js" charset="utf-8"></script>
+    
     <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            margin: 0;
-            padding: 0;
-            background: #ffc0cb;
-            font-size: 20px;
-            font-family: '微软雅黑', '宋体', sans-serif;
-            color: #000000;
-            overflow: auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #fef5f7;
+            color: #333;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow-x: hidden;
         }
-
+        #main { width: 100%; max-width: 1200px; margin: 0 auto; }
+        #error {
+            display: none;
+            background: #ffe6e6;
+            border: 1px solid #ff9999;
+            padding: 15px;
+            margin: 20px auto;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 600px;
+        }
         #wrap {
+            width: 100%;
             position: relative;
-            margin: 10px auto 0;
-            width: 1100px;
-            height: 680px;
-            transform-origin: top center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
-        #canvas {
-            display: block;
-            width: 1100px;
-            height: 680px;
+        #text {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255,255,255,0.92);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            z-index: 2;
         }
-
         .paragraph {
-            margin-bottom: 20px;
-            line-height: 1.6;
+            margin-bottom: 24px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.9s ease-out;
         }
-        .paragraph:last-child {
-            margin-bottom: 0;
-        }
+        .paragraph.visible { opacity:1; transform:translateY(0); }
         .signature {
-            margin-top: 30px;
             text-align: right;
             font-style: italic;
+            font-size: 1.35rem;
+            color: #b71c1c;
+            margin-top: 35px;
+            opacity: 0;
+            transition: opacity 1.6s ease-out;
+        }
+        .signature.visible { opacity:1; }
+        #poetic-line {
+            text-align: center;
+            color: #ff6b6b;
+            font-style: italic;
+            font-size: 1.25rem;
+            margin: 25px 0;
+            max-width: 800px;
+            opacity: 0;
+            transition: opacity 1.4s;
+        }
+        #poetic-line.visible { opacity:1; }
+        #canvas-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        #canvas {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1100 / 680;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            background: #fff0f2;
+        }
+        .hand { cursor: pointer; }
+
+        @media (max-width: 768px) {
+            #text { padding: 22px; }
+            .paragraph { font-size: 1rem; }
+            .signature { font-size: 1.2rem; }
+            #poetic-line { font-size: 1.1rem; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            #text { padding: 18px; }
+            .paragraph { font-size: 0.97rem; margin-bottom: 18px; }
         }
     </style>
-</head>
 
+    <script src="./Love_files/jquery.min.js"></script>
+    <script src="./Love_files/jscex.min.js"></script>
+    <script src="./Love_files/jscex-parser.js"></script>
+    <script src="./Love_files/jscex-jit.js"></script>
+    <script src="./Love_files/jscex-builderbase.min.js"></script>
+    <script src="./Love_files/jscex-async.min.js"></script>
+    <script src="./Love_files/jscex-async-powerpack.min.js"></script>
+    <script src="./Love_files/functions.js"></script>
+    <script src="./Love_files/love.js"></script>
+</head>
 <body>
-    <div id="main">
-        <div id="error">Cher(e) utilisateur(trice), votre navigateur ne supporte pas le contenu qui va s'afficher, veuillez utiliser Chrome (<a
-                href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>) ou Firefox (<a
-                href="http://firefox.com.cn/download/">Firefox</a>) ~</div>
-        <div id="wrap">
-            <div id="text">
-                <div id="code">
-                    <div class="paragraph">
-                        Je t'aime, et ce n'est pas un sentiment léger.
-                    </div>
-                    
-                    <div class="paragraph">
-                        Je t'aime même quand ça fait mal, même quand certaines choses me blessent.<br>
-                        Pas parce que je suis faible, mais parce que mon amour est sincère.
-                    </div>
-                    
-                    <div class="paragraph">
-                        Je crois en toi, en la personne que tu es aujourd'hui et en celle que tu peux devenir.<br>
-                        Je veux être là pour toi, soutenir tes rêves, ton avenir, ta vie.<br>
-                        Je l'ai toujours voulu, et je le veux encore.
-                    </div>
-                    
-                    <div class="paragraph">
-                        Mais aimer, ce n'est pas seulement donner.<br>
-                        J'aimerais aussi compter pour toi.<br>
-                        Être une priorité, pas une option.<br>
-                        Être choisi, respecté, considéré.
-                    </div>
-                    
-                    <div class="paragraph">
-                        Je n'attends pas la perfection.<br>
-                        J'espère simplement un changement, un effort, une réciprocité.<br>
-                        Parce que l'amour, quand il est vrai, se construit à deux.
-                    </div>
-                    
-                    <div class="paragraph">
-                        Je suis là, avec mon cœur ouvert.<br>
-                        Et malgré tout, je t'aime.
-                    </div>
-                    
-                    <div class="signature">
-                        Avec tout mon amour
-                    </div>
-                </div>
-            </div>
-            <div id="poetic-line" style="text-align: center; margin: 20px; color: #ff6b6b; font-style: italic;">
-                Un cœur qui aime est un cœur qui espère...
-            </div>
-            <canvas id="canvas" width="1100" height="680"></canvas>
-        </div>
+
+<div id="main">
+    <div id="error">
+        Cher(e) utilisateur(trice), votre navigateur ne supporte pas cette page.<br>
+        Veuillez utiliser Chrome ou Firefox récent.
     </div>
 
-    <audio preload="auto" autoplay="" id="media" src="love.mp3" autoplay preload loop="loop"></audio>
+    <div id="wrap">
+        <div id="text">
+            <div id="code">
+                <div class="paragraph">Je t'aime, et ce n'est pas un sentiment léger.</div>
+                <div class="paragraph">Je t'aime même quand ça fait mal, même quand certaines choses me blessent.<br>Pas parce que je suis faible, mais parce que mon amour est sincère.</div>
+                <div class="paragraph">Je crois en toi, en la personne que tu es aujourd'hui et en celle que tu peux devenir.<br>Je veux être là pour toi, soutenir tes rêves, ton avenir, ta vie.<br>Je l'ai toujours voulu, et je le veux encore.</div>
+                <div class="paragraph">Mais aimer, ce n'est pas seulement donner.<br>J'aimerais aussi compter pour toi.<br>Être une priorité, pas une option.<br>Être choisi, respecté, considéré.</div>
+                <div class="paragraph">Je n'attends pas la perfection.<br>J'espère simplement un changement, un effort, une réciprocité.<br>Parce que l'amour, quand il est vrai, se construit à deux.</div>
+                <div class="paragraph">Je suis là, avec mon cœur ouvert.<br>Et malgré tout, je t'aime.</div>
+                <div class="signature">Avec tout mon amour</div>
+            </div>
+        </div>
 
-    <script>
-        (function () {
-            var canvas = $('#canvas');
+        <div id="poetic-line">Un cœur qui aime est un cœur qui espère...</div>
 
-            if (!canvas[0].getContext) {
-                $("#error").show();
-                return false;
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+</div>
+
+<audio id="media" loop preload="auto">
+    <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+(function(){
+    const canvas = document.getElementById('canvas');
+    const ctxCheck = canvas.getContext('2d');
+    if (!ctxCheck) {
+        document.getElementById('error').style.display = 'block';
+        return;
+    }
+
+    function createTree() {
+        const cw = Math.min(window.innerWidth * 0.92, 1100);
+        const ch = cw * (680 / 1100);
+
+        canvas.width = cw;
+        canvas.height = ch;
+        canvas.style.width = cw + 'px';
+        canvas.style.height = ch + 'px';
+
+        const scale = cw / 1100;
+
+        const opts = {
+            seed: {
+                x: cw / 2 - 20 * scale,
+                color: "rgb(190, 26, 37)",
+                scale: 2
+            },
+            branch: [[
+                535 * scale, ch,
+                570 * scale, 250 * scale,
+                500 * scale, 200 * scale,
+                30 * scale, 100 * scale,
+                [
+                    [540*scale,500*scale,455*scale,417*scale,340*scale,400*scale,13*scale,100*scale,[[450*scale,435*scale,434*scale,430*scale,394*scale,395*scale,2*scale,40*scale]]],
+                    [550*scale,445*scale,600*scale,356*scale,680*scale,345*scale,12*scale,100*scale,[[578*scale,400*scale,648*scale,409*scale,661*scale,426*scale,3*scale,80*scale]]],
+                    [539*scale,281*scale,537*scale,248*scale,534*scale,217*scale,3*scale,40*scale],
+                    [546*scale,397*scale,413*scale,247*scale,328*scale,244*scale,9*scale,80*scale,[[427*scale,286*scale,383*scale,253*scale,371*scale,205*scale,2*scale,40*scale],[498*scale,345*scale,435*scale,315*scale,395*scale,330*scale,4*scale,60*scale]]],
+                    [546*scale,357*scale,608*scale,252*scale,678*scale,221*scale,6*scale,100*scale,[[590*scale,293*scale,646*scale,277*scale,648*scale,271*scale,2*scale,80*scale]]]
+                ]
+            ]],
+            bloom: {
+                num: Math.floor(700 * scale * 0.8),
+                width: cw,
+                height: ch * 0.96
+            },
+            footer: {
+                width: cw,
+                height: 5,
+                speed: 10
             }
+        };
 
-            var width = canvas.width();
-            var height = canvas.height();
+        const tree = new Tree(canvas, cw, ch, opts);
+        const seed = tree.seed;
+        const foot = tree.footer;
+        let hold = 1;
 
-            canvas.attr("width", width);
-            canvas.attr("height", height);
-
-            var opts = {
-                seed: {
-                    x: width / 2 - 20,
-                    color: "rgb(190, 26, 37)",
-                    scale: 2
-                },
-                branch: [
-                    [535, 680, 570, 250, 500, 200, 30, 100, [
-                        [540, 500, 455, 417, 340, 400, 13, 100, [
-                            [450, 435, 434, 430, 394, 395, 2, 40]
-                        ]],
-                        [550, 445, 600, 356, 680, 345, 12, 100, [
-                            [578, 400, 648, 409, 661, 426, 3, 80]
-                        ]],
-                        [539, 281, 537, 248, 534, 217, 3, 40],
-                        [546, 397, 413, 247, 328, 244, 9, 80, [
-                            [427, 286, 383, 253, 371, 205, 2, 40],
-                            [498, 345, 435, 315, 395, 330, 4, 60]
-                        ]],
-                        [546, 357, 608, 252, 678, 221, 6, 100, [
-                            [590, 293, 646, 277, 648, 271, 2, 80]
-                        ]]
-                    ]]
-                ],
-                bloom: {
-                    num: 700,
-                    width: 1080,
-                    height: 650,
-                },
-                footer: {
-                    width: 1200,
-                    height: 5,
-                    speed: 10,
-                }
+        // Interaction
+        $(canvas).off('click mousemove').on('click', e => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            if (seed.hover(x, y)) {
+                hold = 0;
+                $(canvas).off('click mousemove').removeClass('hand');
+                // Try to play audio after user interaction
+                const audio = document.getElementById('media');
+                audio.play().catch(() => console.log("Autoplay still blocked"));
             }
+        }).on('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            $(canvas).toggleClass('hand', seed.hover(x, y));
+        });
 
-            var tree = new Tree(canvas[0], width, height, opts);
-            var seed = tree.seed;
-            var foot = tree.footer;
-            var hold = 1;
+        const seedAnimate = eval(Jscex.compile("async", function*(){
+            seed.draw();
+            while (hold) yield $await(Jscex.Async.sleep(10));
+            while (seed.canScale()) { seed.scale(0.95); yield $await(Jscex.Async.sleep(10)); }
+            while (seed.canMove()) { seed.move(0, 2); foot.draw(); yield $await(Jscex.Async.sleep(10)); }
+        }));
 
-            canvas.click(function (e) {
-                var offset = canvas.offset(), x, y;
-                x = e.pageX - offset.left;
-                y = e.pageY - offset.top;
-                if (seed.hover(x, y)) {
-                    hold = 0;
-                    canvas.unbind("click");
-                    canvas.unbind("mousemove");
-                    canvas.removeClass('hand');
-                }
-            }).mousemove(function (e) {
-                var offset = canvas.offset(), x, y;
-                x = e.pageX - offset.left;
-                y = e.pageY - offset.top;
-                canvas.toggleClass('hand', seed.hover(x, y));
-            });
+        const growAnimate = eval(Jscex.compile("async", function*(){
+            while (tree.canGrow()) { tree.grow(); yield $await(Jscex.Async.sleep(10)); }
+        }));
 
-            var seedAnimate = eval(Jscex.compile("async", function () {
-                seed.draw();
-                while (hold) {
-                    $await(Jscex.Async.sleep(10));
-                }
-                while (seed.canScale()) {
-                    seed.scale(0.95);
-                    $await(Jscex.Async.sleep(10));
-                }
-                while (seed.canMove()) {
-                    seed.move(0, 2);
-                    foot.draw();
-                    $await(Jscex.Async.sleep(10));
-                }
-            }));
+        const flowAnimate = eval(Jscex.compile("async", function*(){
+            while (tree.canFlower()) { tree.flower(2); yield $await(Jscex.Async.sleep(10)); }
+        }));
 
-            var growAnimate = eval(Jscex.compile("async", function () {
-                do {
-                    tree.grow();
-                    $await(Jscex.Async.sleep(10));
-                } while (tree.canGrow());
-            }));
+        const moveAnimate = eval(Jscex.compile("async", function*(){
+            tree.snapshot("p1", 240*scale, 0, 610*scale, ch);
+            while (tree.move("p1", 500*scale, 0)) { foot.draw(); yield $await(Jscex.Async.sleep(10)); }
+            foot.draw();
+            tree.snapshot("p2", 500*scale, 0, 610*scale, ch);
+            // flicker fix attempt
+            $(canvas).parent().css("background", "url(" + canvas.toDataURL('image/png') + ")");
+            $(canvas).css("background", "#ffebee");
+            yield $await(Jscex.Async.sleep(300));
+            $(canvas).css("background", "none");
+        }));
 
-            var flowAnimate = eval(Jscex.compile("async", function () {
-                do {
-                    tree.flower(2);
-                    $await(Jscex.Async.sleep(10));
-                } while (tree.canFlower());
-            }));
+        const textAnimate = eval(Jscex.compile("async", function*(){
+            const ps = $(".paragraph");
+            for (let p of ps) {
+                $(p).addClass("visible");
+                yield $await(Jscex.Async.sleep(900));
+            }
+            $(".signature").addClass("visible");
+            yield $await(Jscex.Async.sleep(600));
+            $("#poetic-line").addClass("visible");
+        }));
 
-            var moveAnimate = eval(Jscex.compile("async", function () {
-                tree.snapshot("p1", 240, 0, 610, 680);
-                while (tree.move("p1", 500, 0)) {
-                    foot.draw();
-                    $await(Jscex.Async.sleep(10));
-                }
+        const jumpAnimate = eval(Jscex.compile("async", function*(){
+            while (true) {
+                tree.ctx.clearRect(0, 0, cw, ch);
+                tree.jump();
                 foot.draw();
-                tree.snapshot("p2", 500, 0, 610, 680);
+                yield $await(Jscex.Async.sleep(30));
+            }
+        }));
 
-                // Contournement d'un scintillement indésirable (＞﹏＜)
-                canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-                canvas.css("background", "#ffc0cb");
-                $await(Jscex.Async.sleep(300));
-                canvas.css("background", "none");
-            }));
+        const runAll = eval(Jscex.compile("async", function*(){
+            yield $await(seedAnimate());
+            yield $await(growAnimate());
+            yield $await(flowAnimate());
+            yield $await(moveAnimate());
+            textAnimate().start();
+            yield $await(jumpAnimate());
+        }));
 
-            var jumpAnimate = eval(Jscex.compile("async", function () {
-                var ctx = tree.ctx;
-                while (true) {
-                    tree.ctx.clearRect(0, 0, width, height);
-                    tree.jump();
-                    foot.draw();
-                    $await(Jscex.Async.sleep(25));
-                }
-            }));
+        runAll().start();
+    }
 
-            var textAnimate = eval(Jscex.compile("async", function () {
-                $("#code").show().typewriter();
-                // Show poetic line with fade effect
-                $("#poetic-line").fadeIn(1000);
-            }));
+    // Run initially + on resize (debounced)
+    let resizeTimeout;
+    function onResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(createTree, 300);
+    }
 
-            var runAsync = eval(Jscex.compile("async", function () {
-                $await(seedAnimate());
-                $await(growAnimate());
-                $await(flowAnimate());
-                $await(moveAnimate());
+    $(window).on('load', createTree);
+    $(window).on('resize', onResize);
 
-                textAnimate().start();
-
-                $await(jumpAnimate());
-            }));
-
-            runAsync().start();
-        })();
-
-        // Function to adjust scale on resize
-        function adjustScale() {
-            var scale = Math.min(window.innerWidth / 1100, window.innerHeight / 680);
-            $('#wrap').css('transform', 'scale(' + scale + ')');
-        }
-
-        adjustScale();
-        $(window).resize(adjustScale);
-    </script>
-
+    // Optional: try autoplay on load (most browsers block it)
+    // document.getElementById('media').play().catch(()=>{});
+})();
+</script>
 </body>
 </html>
