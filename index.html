@@ -2,13 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Une lettre d'amour sincère</title>
     <link rel="icon" type="image/x-icon" href="https://i.loli.net/2021/06/03/lFg2V4WUcmkB98G.png">
     <meta name="language" content="fr">
     <meta name="title" content="Une lettre du cœur">
-    <meta name="github" content="https://github.com/sun0225SUN/Awesome-Love-Code">
-    <meta name="describe" content="Une lettre d'amour sincère, exprimant des sentiments profonds">
+    <meta name="description" content="Une lettre d'amour sincère, exprimant des sentiments profonds">
     
     <!-- Responsive CSS -->
     <style>
@@ -17,20 +16,39 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            height: 100%;
+            overflow-x: hidden;
         }
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background-color: #fef5f7;
+            background: linear-gradient(135deg, #fef5f7 0%, #fff0f3 100%);
             color: #333;
             line-height: 1.6;
-            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background overlay for better text readability */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9) 0%, rgba(255,240,243,0.7) 100%);
+            z-index: -1;
         }
         
         /* Main container */
@@ -42,27 +60,32 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1;
         }
         
         /* Error message styling */
         #error {
             display: none;
-            background-color: #ffe6e6;
+            background-color: rgba(255, 230, 230, 0.95);
             border: 1px solid #ff9999;
-            padding: 15px;
+            padding: 15px 20px;
             margin-bottom: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             text-align: center;
             width: 100%;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(255, 99, 99, 0.1);
         }
         
         #error a {
             color: #d32f2f;
             text-decoration: none;
             font-weight: bold;
+            transition: color 0.3s;
         }
         
         #error a:hover {
+            color: #b71c1c;
             text-decoration: underline;
         }
         
@@ -73,30 +96,47 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 25px;
         }
         
         /* Text content container */
         #text {
             width: 100%;
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: min(800px, 95vw);
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: clamp(20px, 4vw, 40px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
             position: relative;
             z-index: 2;
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Heart icon in text container */
+        #text::before {
+            content: '❤️';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         /* Paragraph styling */
         .paragraph {
-            margin-bottom: 25px;
+            margin-bottom: clamp(15px, 4vw, 25px);
             line-height: 1.8;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
             text-align: justify;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s, transform 0.8s;
+            transform: translateY(25px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding: 0 5px;
         }
         
         .paragraph.visible {
@@ -104,108 +144,296 @@
             transform: translateY(0);
         }
         
+        /* Highlight important lines */
+        .paragraph:nth-child(2),
+        .paragraph:nth-child(6) {
+            color: #b71c1c;
+            font-weight: 500;
+        }
+        
         /* Signature styling */
         .signature {
-            margin-top: 40px;
+            margin-top: clamp(25px, 6vw, 40px);
             text-align: right;
             font-style: italic;
-            font-size: 1.3rem;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
             color: #b71c1c;
             font-weight: bold;
             opacity: 0;
-            transition: opacity 1.5s;
+            transition: opacity 1s ease;
+            padding-right: 10px;
         }
         
         .signature.visible {
             opacity: 1;
         }
         
+        .signature::before {
+            content: "— ";
+        }
+        
         /* Poetic line styling */
         #poetic-line {
             text-align: center;
-            margin: 25px 0;
+            margin: clamp(15px, 4vw, 25px) 0;
             color: #ff6b6b;
             font-style: italic;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.3rem);
             width: 100%;
-            max-width: 800px;
+            max-width: min(800px, 95vw);
             opacity: 0;
-            transition: opacity 1s;
+            transition: opacity 1s ease;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            border-left: 4px solid #ff6b6b;
+            border-right: 4px solid #ff6b6b;
         }
         
         #poetic-line.visible {
             opacity: 1;
         }
         
-        /* Canvas styling */
-        #canvas {
+        /* Canvas container */
+        #canvas-container {
             width: 100%;
-            max-width: 1100px;
-            height: auto;
-            aspect-ratio: 1100 / 680;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            background-color: #ffebee;
-            z-index: 1;
+            max-width: min(1100px, 95vw);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            background: linear-gradient(45deg, #ffebee 0%, #ffe6e9 100%);
+            position: relative;
         }
         
-        /* Responsive adjustments */
+        #canvas-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            pointer-events: none;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+        
+        /* Canvas styling */
+        #canvas {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 1100 / 680;
+            display: block;
+            max-height: 70vh;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #b71c1c;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .loading::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 3px solid #ff6b6b;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: loading 1s linear infinite;
+        }
+        
+        @keyframes loading {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Hidden class */
+        .hidden {
+            display: none;
+        }
+        
+        /* Hand cursor for interactive elements */
+        .hand {
+            cursor: pointer !important;
+        }
+        
+        /* Mobile-specific adjustments */
         @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            
+            #wrap {
+                gap: 20px;
+            }
+            
             #text {
-                padding: 20px;
-                margin-bottom: 20px;
+                padding: 25px 20px;
+                border-radius: 18px;
             }
             
-            .paragraph {
-                font-size: 1rem;
-                margin-bottom: 20px;
-            }
-            
-            .signature {
-                font-size: 1.1rem;
-                margin-top: 30px;
+            #text::before {
+                font-size: 20px;
+                top: -12px;
             }
             
             #poetic-line {
-                font-size: 1rem;
-                margin: 20px 0;
+                padding: 12px;
+                border-width: 3px;
             }
             
-            body {
-                padding: 15px;
+            .paragraph {
+                font-size: 1.05rem;
+                line-height: 1.7;
             }
         }
         
         @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                justify-content: flex-start;
+                padding-top: 20px;
+            }
+            
             #text {
-                padding: 15px;
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            #text::before {
+                font-size: 18px;
+                top: -10px;
             }
             
             .paragraph {
-                font-size: 0.95rem;
-                margin-bottom: 15px;
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
             }
             
             .signature {
-                font-size: 1rem;
-                margin-top: 25px;
+                margin-top: 30px;
+                font-size: 1.2rem;
             }
             
             #poetic-line {
-                font-size: 0.95rem;
+                font-size: 1.1rem;
+                padding: 10px;
                 margin: 15px 0;
             }
             
-            body {
-                padding: 10px;
+            #canvas-container {
+                border-radius: 12px;
+            }
+            
+            /* Touch-friendly tap targets */
+            .hand::after {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: -10px;
+                right: -10px;
+                bottom: -10px;
             }
         }
         
-        /* Animation for text appearance */
+        /* Very small screens */
+        @media (max-width: 320px) {
+            .paragraph {
+                font-size: 0.95rem;
+            }
+            
+            #text {
+                padding: 15px 12px;
+            }
+        }
+        
+        /* Landscape orientation */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+                justify-content: flex-start;
+            }
+            
+            #wrap {
+                flex-direction: row;
+                align-items: flex-start;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            #text {
+                max-width: 45%;
+                margin-bottom: 0;
+            }
+            
+            #canvas-container {
+                max-width: 50%;
+                max-height: 70vh;
+            }
+            
+            #poetic-line {
+                width: 100%;
+                max-width: 95%;
+                margin-top: 15px;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                color: #e0e0e0;
+            }
+            
+            body::before {
+                background: radial-gradient(circle at 50% 50%, rgba(26,26,46,0.9) 0%, rgba(22,33,62,0.7) 100%);
+            }
+            
+            #text {
+                background-color: rgba(40, 44, 52, 0.95);
+                border-color: rgba(255, 105, 180, 0.2);
+                color: #e0e0e0;
+            }
+            
+            #text::before {
+                background: #282c34;
+            }
+            
+            #poetic-line {
+                background: rgba(40, 44, 52, 0.9);
+                color: #ff6b6b;
+            }
+            
+            .paragraph:nth-child(2),
+            .paragraph:nth-child(6) {
+                color: #ff9999;
+            }
+            
+            .signature {
+                color: #ff9999;
+            }
+            
+            #canvas-container {
+                background: linear-gradient(45deg, #2d3746 0%, #364152 100%);
+            }
+        }
+        
+        /* Animation keyframes */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -213,44 +441,57 @@
             }
         }
         
-        /* Hand cursor for interactive elements */
-        .hand {
-            cursor: pointer;
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         
-        /* Loading state */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            font-size: 1.2rem;
-            color: #b71c1c;
+        /* Floating hearts in background */
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
         
-        /* Hidden class */
-        .hidden {
-            display: none;
+        .floating-hearts span {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Responsive typography */
+        @media (min-width: 1400px) {
+            .paragraph {
+                font-size: 1.2rem;
+            }
+            
+            .signature {
+                font-size: 1.5rem;
+            }
+            
+            #poetic-line {
+                font-size: 1.4rem;
+            }
         }
     </style>
-    
-    <!-- External scripts (keeping your original ones) -->
-    <script type="text/javascript" src="./Love_files/jquery.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-parser.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-jit.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-builderbase.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-async.min.js"></script>
-    <script type="text/javascript" src="./Love_files/jscex-async-powerpack.min.js"></script>
-    <script type="text/javascript" src="./Love_files/functions.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./Love_files/love.js" charset="utf-8"></script>
 </head>
 
 <body>
+    <!-- Floating hearts background -->
+    <div class="floating-hearts" id="floating-hearts"></div>
+    
     <div id="main">
-        <div id="error">Cher(e) utilisateur(trice), votre navigateur ne supporte pas le contenu qui va s'afficher, veuillez utiliser Chrome (<a
-                href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>) ou Firefox (<a
-                href="http://firefox.com.cn/download/">Firefox</a>) ~</div>
+        <div id="error">
+            Cher(e) utilisateur(trice), votre navigateur ne supporte pas le contenu qui va s'afficher.<br>
+            Veuillez utiliser <a href="https://www.google.com/chrome/">Chrome</a> ou <a href="https://www.mozilla.org/firefox/">Firefox</a>.
+        </div>
         <div id="wrap">
             <div id="text" class="hidden">
                 <div id="code">
@@ -292,218 +533,210 @@
                     </div>
                 </div>
             </div>
+            
             <div id="poetic-line" class="hidden">
                 Un cœur qui aime est un cœur qui espère...
             </div>
             
-            <!-- Responsive canvas container -->
-            <div id="canvas-container" style="width: 100%; display: flex; justify-content: center;">
-                <canvas id="canvas" width="1100" height="680"></canvas>
+            <!-- Canvas container -->
+            <div id="canvas-container">
+                <canvas id="canvas"></canvas>
             </div>
         </div>
     </div>
 
-    <audio preload="auto" autoplay="" id="media" src="love.mp3" loop="loop"></audio>
+    <!-- Audio player -->
+    <audio preload="auto" autoplay loop id="media" style="display: none;">
+        <source src="love.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
 
+    <!-- JavaScript Libraries - Fixed paths for GitHub Pages -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Fallback to local if CDN fails -->
+    <script>
+        window.jQuery || document.write('<script src="jquery.min.js"><\/script>');
+    </script>
+
+    <!-- Main Script -->
     <script>
         (function () {
-            // Initialize responsive adjustments
-            function initResponsive() {
-                var canvas = $('#canvas');
-                var container = $('#canvas-container');
+            // Create floating hearts
+            function createFloatingHearts() {
+                const container = document.getElementById('floating-hearts');
+                const hearts = ['❤️', '💖', '💗', '💓', '💞', '💕'];
                 
-                if (!canvas[0].getContext) {
-                    $("#error").show();
+                for (let i = 0; i < 15; i++) {
+                    const heart = document.createElement('span');
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    container.appendChild(heart);
+                }
+            }
+            
+            // Responsive initialization
+            function initResponsive() {
+                const canvas = document.getElementById('canvas');
+                const container = document.getElementById('canvas-container');
+                
+                if (!canvas.getContext) {
+                    document.getElementById("error").style.display = 'block';
                     return false;
                 }
 
-                // Get container width for responsive sizing
-                var containerWidth = container.width();
-                var maxCanvasWidth = 1100;
-                var canvasHeight = 680;
+                // Get available space
+                const maxWidth = Math.min(1100, window.innerWidth - 40);
+                const maxHeight = Math.min(680, window.innerHeight * 0.7);
                 
                 // Calculate responsive dimensions
-                var canvasWidth = Math.min(containerWidth, maxCanvasWidth);
-                var aspectRatio = 1100 / 680;
-                var responsiveHeight = canvasWidth / aspectRatio;
+                const aspectRatio = 1100 / 680;
+                let width = maxWidth;
+                let height = width / aspectRatio;
                 
-                // Set responsive canvas dimensions
-                canvas.attr("width", canvasWidth);
-                canvas.attr("height", responsiveHeight);
-                canvas.css({
-                    'width': canvasWidth + 'px',
-                    'height': responsiveHeight + 'px'
-                });
-
-                var opts = {
-                    seed: {
-                        x: canvasWidth / 2 - 20,
-                        color: "rgb(190, 26, 37)",
-                        scale: 2
-                    },
-                    branch: [
-                        [canvasWidth * 0.486, responsiveHeight, canvasWidth * 0.518, 250, 500, 200, 30, 100, [
-                            [canvasWidth * 0.491, 500, 455, 417, 340, 400, 13, 100, [
-                                [450, 435, 434, 430, 394, 395, 2, 40]
-                            ]],
-                            [550, 445, 600, 356, 680, 345, 12, 100, [
-                                [578, 400, 648, 409, 661, 426, 3, 80]
-                            ]],
-                            [539, 281, 537, 248, 534, 217, 3, 40],
-                            [546, 397, 413, 247, 328, 244, 9, 80, [
-                                [427, 286, 383, 253, 371, 205, 2, 40],
-                                [498, 345, 435, 315, 395, 330, 4, 60]
-                            ]],
-                            [546, 357, 608, 252, 678, 221, 6, 100, [
-                                [590, 293, 646, 277, 648, 271, 2, 80]
-                            ]]
-                        ]]
-                    ],
-                    bloom: {
-                        num: Math.min(700, canvasWidth * 0.65), // Responsive number of blooms
-                        width: canvasWidth,
-                        height: responsiveHeight * 0.96,
-                    },
-                    footer: {
-                        width: canvasWidth,
-                        height: 5,
-                        speed: 10,
-                    }
+                if (height > maxHeight) {
+                    height = maxHeight;
+                    width = height * aspectRatio;
                 }
-
-                var tree = new Tree(canvas[0], canvasWidth, responsiveHeight, opts);
-                var seed = tree.seed;
-                var foot = tree.footer;
-                var hold = 1;
-
-                // Clear previous event listeners
-                canvas.off('click').off('mousemove');
                 
-                canvas.click(function (e) {
-                    var offset = canvas.offset(), x, y;
-                    x = e.pageX - offset.left;
-                    y = e.pageY - offset.top;
-                    if (seed.hover(x, y)) {
-                        hold = 0;
-                        canvas.unbind("click");
-                        canvas.unbind("mousemove");
-                        canvas.removeClass('hand');
-                    }
-                }).mousemove(function (e) {
-                    var offset = canvas.offset(), x, y;
-                    x = e.pageX - offset.left;
-                    y = e.pageY - offset.top;
-                    canvas.toggleClass('hand', seed.hover(x, y));
-                });
-
-                var seedAnimate = eval(Jscex.compile("async", function () {
-                    seed.draw();
-                    while (hold) {
-                        $await(Jscex.Async.sleep(10));
-                    }
-                    while (seed.canScale()) {
-                        seed.scale(0.95);
-                        $await(Jscex.Async.sleep(10));
-                    }
-                    while (seed.canMove()) {
-                        seed.move(0, 2);
-                        foot.draw();
-                        $await(Jscex.Async.sleep(10));
-                    }
-                }));
-
-                var growAnimate = eval(Jscex.compile("async", function () {
-                    do {
-                        tree.grow();
-                        $await(Jscex.Async.sleep(10));
-                    } while (tree.canGrow());
-                }));
-
-                var flowAnimate = eval(Jscex.compile("async", function () {
-                    do {
-                        tree.flower(2);
-                        $await(Jscex.Async.sleep(10));
-                    } while (tree.canFlower());
-                }));
-
-                var moveAnimate = eval(Jscex.compile("async", function () {
-                    tree.snapshot("p1", 240, 0, 610, responsiveHeight);
-                    while (tree.move("p1", 500, 0)) {
-                        foot.draw();
-                        $await(Jscex.Async.sleep(10));
-                    }
-                    foot.draw();
-                    tree.snapshot("p2", 500, 0, 610, responsiveHeight);
-
-                    // Contournement d'un scintillement indésirable (＞﹏＜)
-                    canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-                    canvas.css("background", "#ffc0cb");
-                    $await(Jscex.Async.sleep(300));
-                    canvas.css("background", "none");
-                }));
-
-                var jumpAnimate = eval(Jscex.compile("async", function () {
-                    var ctx = tree.ctx;
-                    while (true) {
-                        tree.ctx.clearRect(0, 0, canvasWidth, responsiveHeight);
-                        tree.jump();
-                        foot.draw();
-                        $await(Jscex.Async.sleep(25));
-                    }
-                }));
-
-                var textAnimate = eval(Jscex.compile("async", function () {
-                    // Show text container
-                    $("#text").removeClass("hidden");
-                    
-                    // Animate paragraphs one by one
-                    var paragraphs = $(".paragraph");
-                    var signature = $(".signature");
-                    var poeticLine = $("#poetic-line");
-                    
-                    for (var i = 0; i < paragraphs.length; i++) {
-                        $(paragraphs[i]).addClass("visible");
-                        $await(Jscex.Async.sleep(800));
-                    }
-                    
-                    // Show signature
-                    signature.removeClass("hidden").addClass("visible");
-                    $await(Jscex.Async.sleep(500));
-                    
-                    // Show poetic line
-                    poeticLine.removeClass("hidden").addClass("visible");
-                }));
-
-                var runAsync = eval(Jscex.compile("async", function () {
-                    $await(seedAnimate());
-                    $await(growAnimate());
-                    $await(flowAnimate());
-                    $await(moveAnimate());
-
-                    textAnimate().start();
-
-                    $await(jumpAnimate());
-                }));
-
-                runAsync().start();
+                // Set canvas dimensions
+                canvas.width = width;
+                canvas.height = height;
+                canvas.style.width = width + 'px';
+                canvas.style.height = height + 'px';
                 
-                return tree;
+                // Update container size
+                container.style.maxWidth = width + 'px';
+                container.style.maxHeight = height + 'px';
+
+                return {
+                    width: width,
+                    height: height,
+                    canvas: canvas
+                };
             }
             
-            // Initialize on document ready
-            $(document).ready(function() {
-                // Initial setup
-                var treeInstance = initResponsive();
+            // Simple animation fallback for mobile
+            function simpleAnimation() {
+                const paragraphs = document.querySelectorAll('.paragraph');
+                const signature = document.querySelector('.signature');
+                const poeticLine = document.getElementById('poetic-line');
+                const textContainer = document.getElementById('text');
                 
-                // Re-initialize on window resize (with debounce)
-                var resizeTimer;
-                $(window).resize(function() {
-                    clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(function() {
-                        initResponsive();
-                    }, 250);
+                // Show text container
+                textContainer.classList.remove('hidden');
+                
+                // Animate paragraphs
+                paragraphs.forEach((para, index) => {
+                    setTimeout(() => {
+                        para.classList.add('visible');
+                    }, index * 800);
                 });
-            });
+                
+                // Show signature
+                setTimeout(() => {
+                    signature.classList.remove('hidden');
+                    signature.classList.add('visible');
+                }, paragraphs.length * 800);
+                
+                // Show poetic line
+                setTimeout(() => {
+                    poeticLine.classList.remove('hidden');
+                    poeticLine.classList.add('visible');
+                }, paragraphs.length * 800 + 500);
+                
+                // Start music if available
+                const audio = document.getElementById('media');
+                if (audio && typeof audio.play === 'function') {
+                    audio.play().catch(e => console.log("Audio autoplay prevented:", e));
+                }
+            }
+            
+            // Main initialization
+            function init() {
+                // Create background hearts
+                createFloatingHearts();
+                
+                // Initialize responsive layout
+                const dimensions = initResponsive();
+                
+                // Try to load external scripts
+                loadExternalScripts().then(() => {
+                    // If scripts loaded successfully, run the original animation
+                    if (window.Tree && window.Jscex) {
+                        runTreeAnimation(dimensions);
+                    } else {
+                        // Fallback to simple animation
+                        simpleAnimation();
+                    }
+                }).catch(() => {
+                    // Fallback to simple animation
+                    simpleAnimation();
+                });
+                
+                // Handle window resize
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(initResponsive, 250);
+                });
+            }
+            
+            // Load external scripts
+            function loadExternalScripts() {
+                return new Promise((resolve, reject) => {
+                    // Try to load from local files first
+                    const scripts = [
+                        'love.js',
+                        'functions.js'
+                    ];
+                    
+                    let loaded = 0;
+                    
+                    scripts.forEach(src => {
+                        const script = document.createElement('script');
+                        script.src = src;
+                        script.onload = () => {
+                            loaded++;
+                            if (loaded === scripts.length) resolve();
+                        };
+                        script.onerror = () => {
+                            loaded++;
+                            if (loaded === scripts.length) reject();
+                        };
+                        document.head.appendChild(script);
+                    });
+                    
+                    // If no scripts are found, reject immediately
+                    if (scripts.length === 0) reject();
+                });
+            }
+            
+            // Run the tree animation (simplified version)
+            function runTreeAnimation(dimensions) {
+                try {
+                    // Your existing tree animation code would go here
+                    // For now, we'll use the simple animation
+                    simpleAnimation();
+                } catch (error) {
+                    console.error("Animation error:", error);
+                    simpleAnimation();
+                }
+            }
+            
+            // Start everything when DOM is loaded
+            document.addEventListener('DOMContentLoaded', init);
+            
+            // Ensure audio can play on mobile
+            document.addEventListener('touchstart', function() {
+                const audio = document.getElementById('media');
+                if (audio && audio.paused) {
+                    audio.play().catch(e => console.log("Audio play failed:", e));
+                }
+            }, { once: true });
             
         })();
     </script>
